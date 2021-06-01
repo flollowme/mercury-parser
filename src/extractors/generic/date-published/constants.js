@@ -12,6 +12,7 @@ export const DATE_PUBLISHED_META_TAGS = [
   'pub_date',
   'pagedate',
   'pubdate',
+  'datepublished',
   'revision_date',
   'doc_date',
   'date_created',

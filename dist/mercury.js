@@ -5916,6 +5916,7 @@ var CLEAN_AUTHOR_RE = /^\s*(posted |written )?by\s*:?\s*(.*)/i; // CLEAN DEK CON
 
 var TEXT_LINK_RE = new RegExp('http(s)?://', 'i'); // An ordered list of meta tag names that denote likely article deks.
 
+var UTC_DATE_STRING = /^\d{4}-\d{2}-\d{2}T.+Z$/;
 var MS_DATE_STRING = /^\d{13}$/i;
 var SEC_DATE_STRING = /^\d{10}$/i;
 var CLEAN_DATE_STRING_RE = /^\s*published\s*:?\s*(.*)/i;
@@ -5976,6 +5977,10 @@ function cleanDateString(dateString) {
   return (dateString.match(SPLIT_DATE_STRING) || []).join(' ').replace(TIME_MERIDIAN_DOTS_RE, 'm').replace(TIME_MERIDIAN_SPACE_RE, '$1 $2 $3').replace(CLEAN_DATE_STRING_RE, '$1').trim();
 }
 function createDate(dateString, timezone, format) {
+  if (UTC_DATE_STRING.test(dateString)) {
+    return moment(new Date(dateString));
+  }
+
   if (TIME_WITH_OFFSET_RE.test(dateString)) {
     return moment(new Date(dateString));
   }
@@ -6451,7 +6456,7 @@ var GenericAuthorExtractor = {
 // likely date published dates. All attributes
 // should be lowercase for faster case-insensitive matching.
 // From most distinct to least distinct.
-var DATE_PUBLISHED_META_TAGS = ['article:published_time', 'displaydate', 'dc.date', 'dc.date.issued', 'rbpubdate', 'publish_date', 'pub_date', 'pagedate', 'pubdate', 'revision_date', 'doc_date', 'date_created', 'content_create_date', 'lastmodified', 'created', 'date']; // An ordered list of XPath Selectors to find
+var DATE_PUBLISHED_META_TAGS = ['article:published_time', 'displaydate', 'dc.date', 'dc.date.issued', 'rbpubdate', 'publish_date', 'pub_date', 'pagedate', 'pubdate', 'datepublished', 'revision_date', 'doc_date', 'date_created', 'content_create_date', 'lastmodified', 'created', 'date']; // An ordered list of XPath Selectors to find
 // likely date published dates. From most explicit
 // to least explicit.
 

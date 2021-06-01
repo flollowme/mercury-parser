@@ -22,6 +22,7 @@ export const DEK_META_TAGS = [];
 export const DEK_SELECTORS = ['.entry-summary'];
 
 // CLEAN DATE PUBLISHED CONSTANTS
+export const UTC_DATE_STRING = /^\d{4}-\d{2}-\d{2}T.+Z$/;
 export const MS_DATE_STRING = /^\d{13}$/i;
 export const SEC_DATE_STRING = /^\d{10}$/i;
 export const CLEAN_DATE_STRING_RE = /^\s*published\s*:?\s*(.*)/i;

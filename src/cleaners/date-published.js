@@ -5,6 +5,7 @@ import parseFormat from 'moment-parseformat';
 // but could just check for 'Invalid Date' string.
 
 import {
+  UTC_DATE_STRING,
   MS_DATE_STRING,
   SEC_DATE_STRING,
   CLEAN_DATE_STRING_RE,
@@ -26,6 +27,10 @@ export function cleanDateString(dateString) {
 }
 
 export function createDate(dateString, timezone, format) {
+  if (UTC_DATE_STRING.test(dateString)) {
+    return moment(new Date(dateString));
+  }
+
   if (TIME_WITH_OFFSET_RE.test(dateString)) {
     return moment(new Date(dateString));
   }

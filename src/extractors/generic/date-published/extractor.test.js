@@ -7,9 +7,21 @@ import GenericDatePublishedExtractor from './extractor';
 
 describe('GenericDatePublishedExtractor', () => {
   describe('extract($, metaCache)', () => {
-    it('extracts datePublished from meta tags', () => {
-      const $ = cheerio.load(HTML.datePublishedMeta.test);
+    it('extracts datePublished from displaydate meta tag', () => {
+      const $ = cheerio.load(HTML.displayDateMeta.test);
       const metaCache = ['displaydate', 'something-else'];
+      const result = GenericDatePublishedExtractor.extract({
+        $,
+        url: '',
+        metaCache,
+      });
+
+      assert.equal(result, HTML.displayDateMeta.result.toISOString());
+    });
+
+    it('extracts datePublished from datePublished meta tag', () => {
+      const $ = cheerio.load(HTML.datePublishedMeta.test);
+      const metaCache = ['datepublished', 'something-else'];
       const result = GenericDatePublishedExtractor.extract({
         $,
         url: '',
@@ -28,7 +40,7 @@ describe('GenericDatePublishedExtractor', () => {
         metaCache,
       });
 
-      assert.equal(result, HTML.datePublishedMeta.result.toISOString());
+      assert.equal(result, HTML.datePublishedSelectors.result.toISOString());
     });
 
     it('extracts from url formatted /2012/08/01/etc', () => {
